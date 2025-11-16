@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/weather_data.dart';
 import '../services/weather_service.dart';
-import 'history_screen.dart';
-import 'about_screen.dart';
+import '../widgets/bottom_nav_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
   final WeatherData weatherData;
@@ -68,7 +67,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _logout() {
-    Navigator.pop(context);
+    // Pop all routes and go back to index input screen
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   @override
@@ -89,6 +89,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: const Icon(Icons.logout),
             onPressed: _logout,
             tooltip: 'Logout',
+            color: Colors.red,
           ),
         ],
       ),
@@ -198,11 +199,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     const SizedBox(height: 20),
                     
-                    // Weather Icon and Temperature
+                    // Weather Icon and Temperature (Dynamic based on weather code)
                     Icon(
-                      Icons.wb_sunny,
+                      _weatherData.weatherIcon,
                       size: 80,
-                      color: Colors.orange.shade400,
+                      color: _weatherData.weatherIconColor,
                     ),
                     const SizedBox(height: 12),
                     Row(
@@ -295,47 +296,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: AppBottomNavBar(
         currentIndex: 0,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HistoryScreen(
-                  studentIndex: _weatherData.studentIndex,
-                ),
-              ),
-            );
-          } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AboutScreen(
-                  studentIndex: _weatherData.studentIndex,
-                  latitude: _weatherData.latitude,
-                  longitude: _weatherData.longitude,
-                ),
-              ),
-            );
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'About Us',
-          ),
-        ],
+        studentIndex: _weatherData.studentIndex,
+        latitude: _weatherData.latitude,
+        longitude: _weatherData.longitude,
+        weatherData: _weatherData,
       ),
     );
   }

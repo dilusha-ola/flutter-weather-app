@@ -39,7 +39,18 @@ class _IndexInputScreenState extends State<IndexInputScreen> {
       final weatherData = await WeatherService.fetchWeather(index);
       
       if (mounted) {
-        Navigator.pushReplacement(
+        // Show message if cached data
+        if (weatherData.isCached) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Unable to fetch new data. Showing cached weather data.'),
+              backgroundColor: Colors.orange,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+        
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => DashboardScreen(weatherData: weatherData),
@@ -48,7 +59,7 @@ class _IndexInputScreenState extends State<IndexInputScreen> {
       }
     } catch (e) {
       setState(() {
-        _errorMessage = 'Failed to fetch weather data. Please check your connection.';
+        _errorMessage = 'Failed to fetch weather data. No cached data available. Please check your connection.';
         _isLoading = false;
       });
     }

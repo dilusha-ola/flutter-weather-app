@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class WeatherData {
   final double temperature;
   final double windSpeed;
@@ -22,29 +24,41 @@ class WeatherData {
   });
 
   String get weatherDescription {
-    // WMO Weather interpretation codes
+    // WMO Weather interpretation codes (from Open-Meteo API)
     switch (weatherCode) {
       case 0:
         return 'Clear Sky';
       case 1:
+        return 'Mainly Clear';
       case 2:
-      case 3:
         return 'Partly Cloudy';
+      case 3:
+        return 'Overcast';
       case 45:
       case 48:
-        return 'Foggy';
+        return 'Fog';
       case 51:
       case 53:
       case 55:
         return 'Drizzle';
+      case 56:
+      case 57:
+        return 'Freezing Drizzle';
       case 61:
+        return 'Light Rain';
       case 63:
+        return 'Moderate Rain';
       case 65:
-        return 'Rain';
+        return 'Heavy Rain';
+      case 66:
+      case 67:
+        return 'Freezing Rain';
       case 71:
+        return 'Light Snow';
       case 73:
+        return 'Moderate Snow';
       case 75:
-        return 'Snow';
+        return 'Heavy Snow';
       case 77:
         return 'Snow Grains';
       case 80:
@@ -60,10 +74,92 @@ class WeatherData {
       case 99:
         return 'Thunderstorm with Hail';
       default:
-        if (weatherCode >= 0 && weatherCode <= 10) {
-          return 'Scorching Sun';
-        }
-        return 'Unknown';
+        return 'Unknown (Code: $weatherCode)';
+    }
+  }
+
+  IconData get weatherIcon {
+    // Return appropriate icon based on weather code
+    switch (weatherCode) {
+      case 0:
+        return Icons.wb_sunny; // Clear sky
+      case 1:
+      case 2:
+        return Icons.wb_sunny_outlined; // Mainly clear / Partly cloudy
+      case 3:
+        return Icons.cloud; // Overcast
+      case 45:
+      case 48:
+        return Icons.foggy; // Fog
+      case 51:
+      case 53:
+      case 55:
+      case 56:
+      case 57:
+        return Icons.grain; // Drizzle
+      case 61:
+      case 63:
+      case 65:
+      case 66:
+      case 67:
+      case 80:
+      case 81:
+      case 82:
+        return Icons.umbrella; // Rain
+      case 71:
+      case 73:
+      case 75:
+      case 77:
+      case 85:
+      case 86:
+        return Icons.ac_unit; // Snow
+      case 95:
+      case 96:
+      case 99:
+        return Icons.thunderstorm; // Thunderstorm
+      default:
+        return Icons.help_outline; // Unknown
+    }
+  }
+
+  Color get weatherIconColor {
+    // Return appropriate color based on weather code
+    switch (weatherCode) {
+      case 0:
+      case 1:
+      case 2:
+        return Colors.orange.shade400; // Clear/Sunny
+      case 3:
+      case 45:
+      case 48:
+        return Colors.grey.shade600; // Cloudy/Fog
+      case 51:
+      case 53:
+      case 55:
+      case 56:
+      case 57:
+      case 61:
+      case 63:
+      case 65:
+      case 66:
+      case 67:
+      case 80:
+      case 81:
+      case 82:
+        return Colors.blue.shade600; // Rain
+      case 71:
+      case 73:
+      case 75:
+      case 77:
+      case 85:
+      case 86:
+        return Colors.lightBlue.shade200; // Snow
+      case 95:
+      case 96:
+      case 99:
+        return Colors.purple.shade700; // Thunderstorm
+      default:
+        return Colors.grey; // Unknown
     }
   }
 

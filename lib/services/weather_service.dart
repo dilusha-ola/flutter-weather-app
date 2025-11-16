@@ -131,8 +131,9 @@ class WeatherService {
       }
       
       await prefs.setString(historyKey, json.encode(history));
+      print('Saved to history. Total items: ${history.length}'); // Debug
     } catch (e) {
-      // Ignore history errors
+      print('Error saving history: $e'); // Debug
     }
   }
 
