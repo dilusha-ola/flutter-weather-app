@@ -25,6 +25,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   Future<void> _loadHistory() async {
     final history = await WeatherService.getHistory();
+    print('Loaded ${history.length} items from history'); // Debug
     setState(() {
       _history = history;
       _isLoading = false;
