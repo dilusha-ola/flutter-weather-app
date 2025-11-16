@@ -88,6 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: const Icon(Icons.logout),
             onPressed: _logout,
             tooltip: 'Logout',
+            color: Colors.red,
           ),
         ],
       ),

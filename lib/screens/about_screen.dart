@@ -29,6 +29,7 @@ class AboutScreen extends StatelessWidget {
               Navigator.popUntil(context, (route) => route.isFirst);
             },
             tooltip: 'Logout',
+            color: Colors.red,
           ),
         ],
       ),

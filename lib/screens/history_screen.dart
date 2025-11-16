@@ -47,6 +47,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               Navigator.popUntil(context, (route) => route.isFirst);
             },
             tooltip: 'Logout',
+            color: Colors.red,
           ),
         ],
       ),
