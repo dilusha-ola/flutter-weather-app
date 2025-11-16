@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/bottom_nav_bar.dart';
 
 class AboutScreen extends StatelessWidget {
   final String studentIndex;
@@ -172,29 +173,11 @@ class AboutScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: AppBottomNavBar(
         currentIndex: 2,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          if (index == 0 || index == 1) {
-            Navigator.pop(context);
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'About Us',
-          ),
-        ],
+        studentIndex: studentIndex,
+        latitude: latitude,
+        longitude: longitude,
       ),
     );
   }

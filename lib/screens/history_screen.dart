@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../services/weather_service.dart';
 import '../models/weather_data.dart';
+import '../widgets/bottom_nav_bar.dart';
 
 class HistoryScreen extends StatefulWidget {
   final String studentIndex;
@@ -113,31 +114,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
             ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: AppBottomNavBar(
         currentIndex: 1,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.pop(context);
-          } else if (index == 2) {
-            Navigator.pushNamed(context, '/about');
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'About Us',
-          ),
-        ],
+        studentIndex: widget.studentIndex,
       ),
     );
   }
