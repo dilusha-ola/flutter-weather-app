@@ -197,11 +197,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     const SizedBox(height: 20),
                     
-                    // Weather Icon and Temperature
+                    // Weather Icon and Temperature (Dynamic based on weather code)
                     Icon(
-                      Icons.wb_sunny,
+                      _weatherData.weatherIcon,
                       size: 80,
-                      color: Colors.orange.shade400,
+                      color: _weatherData.weatherIconColor,
                     ),
                     const SizedBox(height: 12),
                     Row(
