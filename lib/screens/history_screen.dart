@@ -71,56 +71,59 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ),
                       const SizedBox(height: 16),
                       
-                      // Scrollable Table
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(minWidth: 800),
-                          child: Column(
-                            children: [
-                              // Table Header
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(color: Colors.grey.shade300),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                                  child: Row(
-                                    children: [
-                                      _buildHeaderCell('Time', width: 90),
-                                      _buildHeaderCell('Date', width: 100),
-                                      _buildHeaderCell('Description', width: 140),
-                                      _buildHeaderCell('Code', width: 60),
-                                      _buildHeaderCell('Temp (°C)', width: 80),
-                                      _buildHeaderCell('Wind (m/s)', width: 90),
-                                      _buildHeaderCell('Press (hPa)', width: 100),
-                                      _buildHeaderCell('Humidity (%)', width: 100),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              
-                              // Table Rows
-                              
-                              // Table Rows
-                              if (_history.isEmpty)
-                                Padding(
-                                  padding: const EdgeInsets.all(32.0),
-                                  child: Center(
-                                    child: Text(
-                                      'No weather history available yet.',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey.shade600,
-                                      ),
+                      // Scrollable Table with visible scrollbar
+                      Scrollbar(
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: SizedBox(
+                            width: 900,
+                            child: Column(
+                              children: [
+                                // Table Header
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(color: Colors.grey.shade300),
                                     ),
                                   ),
-                                )
-                              else
-                                ..._history.map((data) => _buildHistoryRow(data)),
-                            ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                                    child: Row(
+                                      children: [
+                                        _buildHeaderCell('Time', width: 100),
+                                        _buildHeaderCell('Date', width: 110),
+                                        _buildHeaderCell('Description', width: 150),
+                                        _buildHeaderCell('Code', width: 70),
+                                        _buildHeaderCell('Temp (°C)', width: 90),
+                                        _buildHeaderCell('Wind (m/s)', width: 100),
+                                        _buildHeaderCell('Press (hPa)', width: 110),
+                                        _buildHeaderCell('Humidity (%)', width: 120),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                
+                                // Table Rows
+                                
+                                // Table Rows
+                                if (_history.isEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.all(32.0),
+                                    child: Center(
+                                      child: Text(
+                                        'No weather history available yet.',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey.shade600,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                else
+                                  ..._history.map((data) => _buildHistoryRow(data)),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -169,35 +172,35 @@ class _HistoryScreenState extends State<HistoryScreen> {
           children: [
             _buildDataCell(
               timeFormat.format(data.lastUpdated),
-              width: 90,
+              width: 100,
             ),
             _buildDataCell(
               dateFormat.format(data.lastUpdated),
-              width: 100,
+              width: 110,
             ),
             _buildDataCell(
               data.weatherDescription,
-              width: 140,
+              width: 150,
             ),
             _buildDataCell(
               data.weatherCode.toString(),
-              width: 60,
+              width: 70,
             ),
             _buildDataCell(
               data.temperature.toStringAsFixed(0),
-              width: 80,
-            ),
-            _buildDataCell(
-              data.windSpeed.toStringAsFixed(1),
               width: 90,
             ),
             _buildDataCell(
-              '1014',
+              data.windSpeed.toStringAsFixed(1),
               width: 100,
             ),
             _buildDataCell(
+              '1014',
+              width: 110,
+            ),
+            _buildDataCell(
               '84',
-              width: 100,
+              width: 120,
             ),
           ],
         ),
