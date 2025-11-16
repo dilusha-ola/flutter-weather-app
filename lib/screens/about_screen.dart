@@ -158,9 +158,9 @@ class AboutScreen extends StatelessWidget {
                         color: Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: const SelectableText(
-                        'https://api.open-meteo.com/v1/forecast?latitude=...&longitude=...&current_weather=true',
-                        style: TextStyle(
+                      child: SelectableText(
+                        'https://api.open-meteo.com/v1/forecast?latitude=${latitude.toStringAsFixed(2)}&longitude=${longitude.toStringAsFixed(2)}&current_weather=true',
+                        style: const TextStyle(
                           fontSize: 13,
                           fontFamily: 'monospace',
                         ),
