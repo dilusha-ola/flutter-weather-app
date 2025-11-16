@@ -26,7 +26,7 @@ class AboutScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              Navigator.popUntil(context, (route) => route.isFirst);
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
             tooltip: 'Logout',
             color: Colors.red,

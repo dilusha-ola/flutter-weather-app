@@ -50,7 +50,7 @@ class _IndexInputScreenState extends State<IndexInputScreen> {
           );
         }
         
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => DashboardScreen(weatherData: weatherData),

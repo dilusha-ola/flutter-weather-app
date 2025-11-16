@@ -44,7 +44,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              Navigator.popUntil(context, (route) => route.isFirst);
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
             tooltip: 'Logout',
             color: Colors.red,

@@ -67,7 +67,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _logout() {
-    Navigator.pop(context);
+    // Pop all routes and go back to index input screen
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   @override
