@@ -71,45 +71,59 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ),
                       const SizedBox(height: 16),
                       
-                      // Table Header
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(color: Colors.grey.shade300),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          child: Row(
+                      // Scrollable Table
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(minWidth: 800),
+                          child: Column(
                             children: [
-                              _buildHeaderCell('Time', flex: 2),
-                              _buildHeaderCell('Date', flex: 2),
-                              _buildHeaderCell('Description', flex: 3),
-                              _buildHeaderCell('Temp (°C)', flex: 2),
-                              _buildHeaderCell('Wind (m/s)', flex: 2),
-                              _buildHeaderCell('Press (hPa)', flex: 2),
-                              _buildHeaderCell('Humidity (%)', flex: 2),
+                              // Table Header
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(color: Colors.grey.shade300),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                                  child: Row(
+                                    children: [
+                                      _buildHeaderCell('Time', width: 90),
+                                      _buildHeaderCell('Date', width: 100),
+                                      _buildHeaderCell('Description', width: 140),
+                                      _buildHeaderCell('Code', width: 60),
+                                      _buildHeaderCell('Temp (°C)', width: 80),
+                                      _buildHeaderCell('Wind (m/s)', width: 90),
+                                      _buildHeaderCell('Press (hPa)', width: 100),
+                                      _buildHeaderCell('Humidity (%)', width: 100),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              
+                              // Table Rows
+                              
+                              // Table Rows
+                              if (_history.isEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.all(32.0),
+                                  child: Center(
+                                    child: Text(
+                                      'No weather history available yet.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              else
+                                ..._history.map((data) => _buildHistoryRow(data)),
                             ],
                           ),
                         ),
                       ),
-                      
-                      // Table Rows
-                      if (_history.isEmpty)
-                        Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: Center(
-                            child: Text(
-                              'No weather history available yet.',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey.shade600,
-                              ),
-                            ),
-                          ),
-                        )
-                      else
-                        ..._history.map((data) => _buildHistoryRow(data)),
                     ],
                   ),
                 ),
@@ -122,16 +136,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Widget _buildHeaderCell(String text, {int flex = 1}) {
-    return Expanded(
-      flex: flex,
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 12,
+  Widget _buildHeaderCell(String text, {required double width}) {
+    return SizedBox(
+      width: width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+          textAlign: TextAlign.left,
         ),
-        textAlign: TextAlign.left,
       ),
     );
   }
@@ -152,31 +169,35 @@ class _HistoryScreenState extends State<HistoryScreen> {
           children: [
             _buildDataCell(
               timeFormat.format(data.lastUpdated),
-              flex: 2,
+              width: 90,
             ),
             _buildDataCell(
               dateFormat.format(data.lastUpdated),
-              flex: 2,
+              width: 100,
             ),
             _buildDataCell(
               data.weatherDescription,
-              flex: 3,
+              width: 140,
+            ),
+            _buildDataCell(
+              data.weatherCode.toString(),
+              width: 60,
             ),
             _buildDataCell(
               data.temperature.toStringAsFixed(0),
-              flex: 2,
+              width: 80,
             ),
             _buildDataCell(
               data.windSpeed.toStringAsFixed(1),
-              flex: 2,
+              width: 90,
             ),
             _buildDataCell(
               '1014',
-              flex: 2,
+              width: 100,
             ),
             _buildDataCell(
               '84',
-              flex: 2,
+              width: 100,
             ),
           ],
         ),
@@ -184,13 +205,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Widget _buildDataCell(String text, {int flex = 1}) {
-    return Expanded(
-      flex: flex,
-      child: Text(
-        text,
-        style: const TextStyle(fontSize: 11),
-        textAlign: TextAlign.left,
+  Widget _buildDataCell(String text, {required double width}) {
+    return SizedBox(
+      width: width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 11),
+          textAlign: TextAlign.left,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }
