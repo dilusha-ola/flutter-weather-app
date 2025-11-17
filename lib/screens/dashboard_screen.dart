@@ -115,6 +115,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     const SizedBox(height: 12),
                     _buildInfoRow(
+                      'Student Index :',
+                      _weatherData.studentIndex,
+                    ),
+                    const SizedBox(height: 8),
+                    _buildInfoRow(
                       'Index-Derived Location :',
                       'Lat: ${_weatherData.latitude.toStringAsFixed(2)}, Lon: ${_weatherData.longitude.toStringAsFixed(2)}',
                     ),
